@@ -90,6 +90,11 @@ var Base = Class.extend(Event, {
 /**支持jQuery事件**/
 var RichBase = Base.extend({
   EVENTS: {},
+  init: function(config) {
+    this._config = config;
+    this.render();
+    this._delegateEvents();
+  },
   _delegateEvents: function() {
     var __this = this,
       events = __this.EVENTS || {},
