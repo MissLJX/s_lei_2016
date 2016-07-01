@@ -1,8 +1,15 @@
+/**
+  自定义事件
+  rendercompleted
+  imagechanged
+**/
+
 var Slider = RichBase.extend({
   EVENTS: {},
   init: function(config) {
     this._config = config;
     this._delegateEvents();
+    this.fire('rendercompleted');
   },
   render: function(collections) {
     if (!collections || collections.length <= 0) return;
@@ -19,13 +26,20 @@ var Slider = RichBase.extend({
         ');background-repeat:no-repeat;background-size:100%;background-position:center;"></a>'
       );
     }
-
     sliders.push('</div>');
-
+    __this.get('parentNode').
+    this.fire('rendercompleted');
   },
   jumpto: function(index) {
-
+    var __this = this;
+    __this.fire('imagechanged', index);
   },
-  next: function() {},
-  pre: function() {}
+  next: function() {
+    var __this = this;
+    __this.fire('imagechanged', index);
+  },
+  pre: function() {
+    var __this = this;
+    __this.fire('imagechanged', index);
+  }
 });
