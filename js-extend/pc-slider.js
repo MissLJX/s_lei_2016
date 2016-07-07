@@ -5,41 +5,60 @@
 **/
 
 var Slider = RichBase.extend({
-  EVENTS: {},
+  _waitings: [],
+  _displaying: null,
+  _displayed: [],
+  EVENTS: {
+    '#next-btn': {
+      'click': function(__this, this, event) {
+        __this.next();
+      }
+    },
+    '#pre-btn': {
+      'click': function(__this, this, event) {
+        __this.pre();
+      }
+    }
+  },
   init: function(config) {
     this._config = config;
     this._delegateEvents();
     this.fire('rendercompleted');
   },
-  render: function(collections) {
-    if (!collections || collections.length <= 0) return;
-    var __this = this,
-      sliders = [],
-      collection;
-    sliders.push('<div class="sliders">');
-    for (var i = 0, len = collections.length; i < len; i++) {
-      collection = collections[i];
-      sliders.push('<a href="' + collection.url +
-        '" class="slider" style="width:' + __this.get("sliderWidth") +
-        ';height:' + __this.get("sliderHeight") +
-        ';display:block;background-image:url(' + collection.image +
-        ');background-repeat:no-repeat;background-size:100%;background-position:center;"></a>'
-      );
+
+  initDisplays: function(collections) {
+    this._displaying = this._createSlider(collections[0]);
+    if (collections && collections.length > 1) {
+      for (var i = 1, len = collections.length; i < len; i++) {
+        this._waitings.push(this._createSlider(collections[i]));
+      }
     }
-    sliders.push('</div>');
-    __this.get('parentNode').append(sliders.join(''));
-    this.fire('rendercompleted');
+  },
+
+  _createDisplayer: function() {
+    var __this = this;
+    var displayer = '<div></div>';
+  },
+  _createSlider: function(collection) {
+    return '<div class="slider"></div>';
+  },
+
+  getCurrentIndex: function() {
+    return this.currentIndex ? (++this.currentIndex) : (this.currentIndex =
+      0);
   },
   jumpto: function(index) {
     var __this = this;
-    __this.fire('imagechanged', index);
+
   },
   next: function() {
     var __this = this;
-    __this.fire('imagechanged', index);
+    __this._displayed.push(__this.displaying);
+    __this.displaying = __this._waitings.shift();
+
   },
   pre: function() {
     var __this = this;
-    __this.fire('imagechanged', index);
+
   }
 });
