@@ -27,7 +27,7 @@ var Slider = RichBase.extend({
       );
     }
     sliders.push('</div>');
-    __this.get('parentNode').
+    __this.get('parentNode').append(sliders.join(''));
     this.fire('rendercompleted');
   },
   jumpto: function(index) {

@@ -1,8 +1,43 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script>
+        function t(){
+          var slider = document.getElementsByClassName('slider-bar') , ul = slider[0].getElementsByTagName('ul') , li = ul[0].getElementsByTagName('li')[2];
+          alert(li.innerHTML);
+        };
 
+
+        $(function(){
+          var e = $.Event('keydown');
+          e.which = 32;
+          $('#sip').trigger(e);
+
+          setTimeout(function(){
+            e.which = 8;
+            $('#sip').trigger(e);
+          },3000);
+
+          $(document).on('keyup','#sip',function(){
+            alert($(this).val());
+          });
+
+        });
+
+    </script>
   </head>
 
-  
+  <body>
+    <div class="slider-bar">
+
+      <input id="sip">
+
+      <ul>
+          <li>Shao</li>
+          <li>Xiao</li>
+          <li>Xu</li>
+
+      </ul>
+    </div>
+  </body>
 </html>
